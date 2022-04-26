@@ -19,12 +19,13 @@ import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImage
 import com.example.movieexpress.model.response.toptwofiftymovies.Movie
+import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun HorizontalCard(
     navController: NavController = rememberNavController(),
-    movie: Movie
+    movie: UpcomingMovie
 ) {
     Card(
         modifier = Modifier
@@ -53,7 +54,7 @@ fun HorizontalCard(
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = movie.crew,
+                    text = movie.directors,
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier.padding(start = 8.dp),
                     maxLines = 2,
@@ -65,23 +66,4 @@ fun HorizontalCard(
         }
     }
 
-}
-
-
-@Preview
-@Composable
-fun PreviewHCard() {
-    HorizontalCard(
-        movie = Movie(
-            crew = "Tom Cruise",
-            fullTitle = "Mission Impossible 4",
-            id = "djaknk",
-            imDbRating = "7.8",
-            imDbRatingCount = "2839892",
-            image = "https://imdb-api.com/images/original/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_Ratio0.6716_AL_.jpg",
-            rank = "6",
-            title = "MI 4",
-            year = "2016"
-        )
-    )
 }

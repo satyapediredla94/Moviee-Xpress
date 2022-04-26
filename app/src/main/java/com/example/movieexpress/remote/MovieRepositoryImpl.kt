@@ -4,6 +4,7 @@ import com.example.movieexpress.model.response.toptwofiftymovies.Movie
 import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
 import com.example.movieexpress.utils.Resource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
@@ -14,8 +15,13 @@ class MovieRepositoryImpl(
         emit(Resource.Loading(true))
         try {
             val movies = apiService.getTopMovies()
-            emit(Resource.Success(movies.items))
-            emit(Resource.Loading(false))
+            if (movies.errorMessage.isNotEmpty()) {
+                emit(Resource.Failure(message = movies.errorMessage))
+            } else {
+                movies.items?.let {
+                    emit(Resource.Success(movies.items))
+                }
+            }
         } catch (e: IOException) {
             emit(Resource.Failure(null, "Something went wrong at Server"))
             emit(Resource.Loading(false))
@@ -30,7 +36,13 @@ class MovieRepositoryImpl(
         emit(Resource.Loading(true))
         try {
             val movies = apiService.getPopularMovies()
-            emit(Resource.Success(movies.items))
+            if (movies.errorMessage.isNotEmpty()) {
+                emit(Resource.Failure(message = movies.errorMessage))
+            } else {
+                movies.items?.let {
+                    emit(Resource.Success(movies.items))
+                }
+            }
             emit(Resource.Loading(false))
         } catch (e: IOException) {
             emit(Resource.Failure(null, "Something went wrong at Server"))
@@ -42,18 +54,25 @@ class MovieRepositoryImpl(
 
     }
 
-    override fun getUpcomingMovies(): Flow<Resource<List<UpcomingMovie>>> = flow {
-        emit(Resource.Loading(true))
+    override fun getUpcomingMovies(): Flow<Resource<List<UpcomingMovie>>> = channelFlow {
+        send(Resource.Loading(true))
         try {
             val movies = apiService.getUpcomingMovies()
-            emit(Resource.Success(movies.upcomingMovies))
-            emit(Resource.Loading(false))
+
+            if (movies.errorMessage.isNotEmpty()) {
+                send(Resource.Failure(message = movies.errorMessage))
+            } else {
+                movies.upcomingMovies?.let {
+                    send(Resource.Success(movies.upcomingMovies))
+                }
+            }
+            send(Resource.Loading(false))
         } catch (e: IOException) {
-            emit(Resource.Failure(null, "Something went wrong at Server"))
-            emit(Resource.Loading(false))
+            send(Resource.Failure(null, "Something went wrong at Server"))
+            send(Resource.Loading(false))
         } catch (e: Exception) {
-            emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
-            emit(Resource.Loading(false))
+            send(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
+            send(Resource.Loading(false))
         }
     }
 }

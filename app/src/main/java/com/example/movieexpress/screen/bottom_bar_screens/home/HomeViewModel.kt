@@ -20,8 +20,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         getTopMovies()
-        getPopularMovies()
-        getComingSoonMovies()
     }
 
     private fun getTopMovies() {
@@ -33,14 +31,23 @@ class HomeViewModel @Inject constructor(
                             state = state.copy(
                                 topTwoFiftyMovies = result.data!!
                             )
+                            getPopularMovies()
                         }
-                        is Resource.Failure -> {}
+                        is Resource.Failure -> {
+                            handleFailure(result)
+                        }
                         is Resource.Loading -> {
                             state = state.copy(isLoading = result.isLoading)
                         }
                     }
                 }
         }
+    }
+
+    private fun <T> handleFailure(result: Resource.Failure<List<T>>) {
+        state = state.copy(
+            isError = result.message!!
+        )
     }
 
 
@@ -53,8 +60,11 @@ class HomeViewModel @Inject constructor(
                             state = state.copy(
                                 popularMovies = result.data!!
                             )
+                            getComingSoonMovies()
                         }
-                        is Resource.Failure -> {}
+                        is Resource.Failure -> {
+                            handleFailure(result)
+                        }
                         is Resource.Loading -> {
                             state = state.copy(isLoading = result.isLoading)
                         }
@@ -73,7 +83,9 @@ class HomeViewModel @Inject constructor(
                                 comingSoonMovies = result.data!!
                             )
                         }
-                        is Resource.Failure -> {}
+                        is Resource.Failure -> {
+                            handleFailure(result)
+                        }
                         is Resource.Loading -> {
                             state = state.copy(isLoading = result.isLoading)
                         }

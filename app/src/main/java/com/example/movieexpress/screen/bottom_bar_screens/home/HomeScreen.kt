@@ -52,7 +52,7 @@ fun HomeScreen(
         )
         Spacer(modifier = Modifier.height(8.dp))
         LazyColumn {
-            items(popularMovies) { movie ->
+            items(upcomingMovies) { movie ->
                 HorizontalCard(movie = movie)
                 Spacer(modifier = Modifier.height(8.dp))
             }

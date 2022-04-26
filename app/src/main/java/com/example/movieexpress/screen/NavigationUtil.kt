@@ -13,8 +13,8 @@ import com.example.movieexpress.screen.bottom_bar_screens.home.HomeScreen
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
 
 @Composable
-fun Navigation(navController: NavHostController) {
-    val viewModel: HomeViewModel = hiltViewModel()
+fun Navigation(navController: NavHostController,
+               viewModel: HomeViewModel) {
     NavHost(navController, startDestination = BottomMenuItem.Home.route) {
         composable(BottomMenuItem.Home.route) {
             HomeScreen(
