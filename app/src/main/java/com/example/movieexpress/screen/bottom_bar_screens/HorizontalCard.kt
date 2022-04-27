@@ -33,6 +33,7 @@ fun HorizontalCard(
             .clickable {
             }
             .height(80.dp)
+            .fillMaxWidth()
     ) {
         Row(
 

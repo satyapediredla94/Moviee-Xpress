@@ -18,9 +18,7 @@ fun Navigation(navController: NavHostController,
     NavHost(navController, startDestination = BottomMenuItem.Home.route) {
         composable(BottomMenuItem.Home.route) {
             HomeScreen(
-                topMovies = viewModel.state.topTwoFiftyMovies,
-                popularMovies = viewModel.state.popularMovies,
-                upcomingMovies = viewModel.state.comingSoonMovies
+                state = viewModel.state
             )
         }
         composable(BottomMenuItem.Series.route) {

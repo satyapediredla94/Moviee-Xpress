@@ -38,26 +38,30 @@ fun VerticalCard(
         ) {
             AsyncImage(
                 model = movie.image, contentDescription = "",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.75f),
                 contentScale = ContentScale.FillWidth
             )
             Spacer(Modifier.height(10.dp))
-            Text(
-                text = movie.fullTitle,
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 8.dp),
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(Modifier.height(10.dp))
-            Text(
-                text = movie.crew,
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier.padding(start = 8.dp),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
+            Column(Modifier.fillMaxHeight(0.25f)) {
+                Text(
+                    text = movie.fullTitle,
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(start = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    text = movie.crew,
+                    style = MaterialTheme.typography.body2,
+                    modifier = Modifier.padding(start = 8.dp),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 

@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -17,12 +19,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService() : MovieXpressApiService = Retrofit.Builder()
+    fun provideOkHttpClient() : OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
+
+    @Provides
+    @Singleton
+    fun provideApiService(
+        okHttpClient: OkHttpClient
+    ) : MovieXpressApiService = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(MovieXpressApiService.BASE_URL)
+        .client(okHttpClient)
         .build()
         .create(MovieXpressApiService::class.java)
-
 
     @Provides
     @Singleton

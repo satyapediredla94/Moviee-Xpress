@@ -6,6 +6,7 @@ import com.example.movieexpress.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 import java.io.IOException
 
 class MovieRepositoryImpl(
@@ -58,11 +59,12 @@ class MovieRepositoryImpl(
         send(Resource.Loading(true))
         try {
             val movies = apiService.getUpcomingMovies()
-
+            Timber.d("Upcoming movies from service: ${movies.upcomingMovies?.size}")
             if (movies.errorMessage.isNotEmpty()) {
                 send(Resource.Failure(message = movies.errorMessage))
             } else {
                 movies.upcomingMovies?.let {
+                    Timber.d("Upcoming movies from service: ${it.size}")
                     send(Resource.Success(movies.upcomingMovies))
                 }
             }
