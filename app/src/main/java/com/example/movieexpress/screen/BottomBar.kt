@@ -5,9 +5,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.movieexpress.R
 
 @Composable
 fun BottomBar(
@@ -48,8 +50,8 @@ fun BottomBar(
                 },
                 icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
                 label = { Text(text = item.title) },
-                selectedContentColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
-                unselectedContentColor = if (isSystemInDarkTheme()) Color.Black else Color.White,
+                selectedContentColor = if (isSystemInDarkTheme()) colorResource(id = R.color.custom_cyan) else Color.Black,
+                unselectedContentColor = if (isSystemInDarkTheme()) Color.Gray else Color.White,
                 alwaysShowLabel = true
             )
         }
