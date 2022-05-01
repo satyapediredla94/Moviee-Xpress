@@ -50,7 +50,7 @@ fun SeriesScreen(
             CircularProgressIndicator()
         } else {
             LazyColumn(
-                modifier = Modifier.height((80 * 5).dp)
+                modifier = Modifier.height((80 * 6).dp)
             ) {
                 items(state.topTwoFiftySeries) { movie ->
                     HorizontalMovieCard(movie = movie)

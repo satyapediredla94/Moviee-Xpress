@@ -27,22 +27,6 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = LocalContext.current.resources.getString(R.string.top_movies),
-            style = MaterialTheme.typography.h6
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        if (state.isLoading) {
-            CircularProgressIndicator()
-        } else {
-            LazyRow {
-                items(state.topTwoFiftyMovies) { movie ->
-                    VerticalMovieCard(movie = movie)
-                    Spacer(modifier = Modifier.width(8.dp))
-                }
-            }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
             text = LocalContext.current.resources.getString(R.string.popular_movies),
             style = MaterialTheme.typography.h6
         )
@@ -57,6 +41,23 @@ fun HomeScreen(
                 }
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = LocalContext.current.resources.getString(R.string.popular_tvs),
+            style = MaterialTheme.typography.h6
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        } else {
+            LazyRow {
+                items(state.popularTVs) { movie ->
+                    VerticalMovieCard(movie = movie)
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = LocalContext.current.resources.getString(R.string.upcoming_movies),
             style = MaterialTheme.typography.h6
@@ -66,7 +67,7 @@ fun HomeScreen(
             CircularProgressIndicator()
         } else {
             LazyColumn(
-                Modifier.height((80 * 5).dp)
+                Modifier.height((80 * 6).dp)
             ) {
                 items(state.comingSoonMovies) { movie ->
                     HorizontalUpcomingMovieCard(movie = movie)

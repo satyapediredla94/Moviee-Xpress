@@ -1,13 +1,12 @@
 package com.example.movieexpress.screen.bottom_bar_screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -24,24 +23,42 @@ fun MoviesScreen(
     state: HomeState
 ) {
     Column(
-        Modifier
+        modifier = Modifier
             .padding(20.dp)
-
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = LocalContext.current.resources.getString(R.string.in_theater_movies),
+            text = LocalContext.current.resources.getString(R.string.popular_movies),
             style = MaterialTheme.typography.h6
         )
         Spacer(modifier = Modifier.height(8.dp))
         if (state.isLoading) {
             CircularProgressIndicator()
         } else {
-            LazyVerticalGrid(cells = GridCells.Fixed(2)) {
-                items(state.inTheaterMovies) { movie ->
-                    VerticalUpcomingMovieCard(movie = movie)
+            LazyRow {
+                items(state.popularMovies) { movie ->
+                    VerticalMovieCard(movie = movie)
+                    Spacer(modifier = Modifier.width(8.dp))
                 }
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = LocalContext.current.resources.getString(R.string.top_movies),
+            style = MaterialTheme.typography.h6
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        } else {
+            LazyColumn(
+                modifier = Modifier.height((80 * 5).dp)
+            ) {
+                items(state.topTwoFiftyMovies) { movie ->
+                    HorizontalMovieCard(movie = movie)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+        }
     }
 }
