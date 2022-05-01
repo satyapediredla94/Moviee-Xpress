@@ -1,4 +1,4 @@
-package com.example.movieexpress.screen.bottom_bar_screens
+package com.example.movieexpress.screen.bottom_bar_screens.series
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.movieexpress.R
+import com.example.movieexpress.screen.bottom_bar_screens.cards.HorizontalMovieCard
+import com.example.movieexpress.screen.bottom_bar_screens.cards.VerticalMovieCard
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeState
 
 @Composable

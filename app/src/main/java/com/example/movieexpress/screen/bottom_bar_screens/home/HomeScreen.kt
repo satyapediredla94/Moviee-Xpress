@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.movieexpress.R
-import com.example.movieexpress.screen.bottom_bar_screens.HorizontalUpcomingMovieCard
-import com.example.movieexpress.screen.bottom_bar_screens.VerticalMovieCard
+import com.example.movieexpress.screen.bottom_bar_screens.cards.HorizontalUpcomingMovieCard
+import com.example.movieexpress.screen.bottom_bar_screens.cards.VerticalMovieCard
 
 @Composable
 fun HomeScreen(

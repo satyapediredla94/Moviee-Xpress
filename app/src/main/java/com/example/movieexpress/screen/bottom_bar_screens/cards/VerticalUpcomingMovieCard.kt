@@ -1,4 +1,4 @@
-package com.example.movieexpress.screen.bottom_bar_screens
+package com.example.movieexpress.screen.bottom_bar_screens.cards
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -7,6 +7,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -21,7 +22,7 @@ import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun HorizontalUpcomingMovieCard(
+fun VerticalUpcomingMovieCard(
     navController: NavController = rememberNavController(),
     movie: UpcomingMovie
 ) {
@@ -30,19 +31,22 @@ fun HorizontalUpcomingMovieCard(
             .clip(RoundedCornerShape(15.dp))
             .clickable {
             }
-            .height(80.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(0.5f)
+            .padding(4.dp)
     ) {
-        Row(
-
+        Column(
+            modifier = Modifier.padding(bottom = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
                 model = movie.image, contentDescription = "",
-                modifier = Modifier.fillMaxHeight(),
-                contentScale = ContentScale.FillHeight
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.75f),
+                contentScale = ContentScale.FillWidth
             )
-            Spacer(Modifier.width(10.dp))
-            Column(Modifier.padding(8.dp)) {
+            Spacer(Modifier.height(10.dp))
+            Column(Modifier.fillMaxHeight(0.25f)) {
                 Text(
                     text = movie.fullTitle,
                     style = MaterialTheme.typography.body1,
@@ -51,7 +55,7 @@ fun HorizontalUpcomingMovieCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(10.dp))
                 Text(
                     text = movie.directors,
                     style = MaterialTheme.typography.body2,
@@ -60,8 +64,6 @@ fun HorizontalUpcomingMovieCard(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-
-
         }
     }
 

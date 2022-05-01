@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.movieexpress.screen.bottom_bar_screens.MoviesScreen
-import com.example.movieexpress.screen.bottom_bar_screens.SearchScreen
-import com.example.movieexpress.screen.bottom_bar_screens.SeriesScreen
-import com.example.movieexpress.screen.bottom_bar_screens.SettingsScreen
+import com.example.movieexpress.screen.bottom_bar_screens.movies.MoviesScreen
+import com.example.movieexpress.screen.bottom_bar_screens.search.SearchScreen
+import com.example.movieexpress.screen.bottom_bar_screens.series.SeriesScreen
+import com.example.movieexpress.screen.bottom_bar_screens.settings.SettingsScreen
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeScreen
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
 

@@ -1,4 +1,4 @@
-package com.example.movieexpress.screen.bottom_bar_screens
+package com.example.movieexpress.screen.bottom_bar_screens.cards
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
