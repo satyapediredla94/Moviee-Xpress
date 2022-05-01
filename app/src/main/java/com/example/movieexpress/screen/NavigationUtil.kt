@@ -1,7 +1,6 @@
 package com.example.movieexpress.screen
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,8 +12,10 @@ import com.example.movieexpress.screen.bottom_bar_screens.home.HomeScreen
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
 
 @Composable
-fun Navigation(navController: NavHostController,
-               viewModel: HomeViewModel) {
+fun Navigation(
+    navController: NavHostController,
+    viewModel: HomeViewModel
+) {
     NavHost(navController, startDestination = BottomMenuItem.Home.route) {
         composable(BottomMenuItem.Home.route) {
             HomeScreen(
@@ -22,7 +23,8 @@ fun Navigation(navController: NavHostController,
             )
         }
         composable(BottomMenuItem.Series.route) {
-            SeriesScreen()
+            viewModel.getPopularTVs()
+            SeriesScreen(state = viewModel.state)
         }
         composable(BottomMenuItem.Movies.route) {
             viewModel.getInTheaterMovies()

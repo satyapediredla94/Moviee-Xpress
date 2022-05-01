@@ -4,4 +4,6 @@
     <string name="popular_movies">Popular Movies</string>
     <string name="upcoming_movies">Coming Soon</string>
     <string name="in_theater_movies">In Theater</string>
+    <string name="popular_tvs">Popular TV Shows</string>
+    <string name="top_two_fifty_tvs">Top 250 Shows</string>
 </resources>

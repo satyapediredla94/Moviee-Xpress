@@ -19,14 +19,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient() : OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        .build()
 
     @Provides
     @Singleton
     fun provideApiService(
         okHttpClient: OkHttpClient
-    ) : MovieXpressApiService = Retrofit.Builder()
+    ): MovieXpressApiService = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(MovieXpressApiService.BASE_URL)
         .client(okHttpClient)
@@ -37,6 +38,6 @@ object AppModule {
     @Singleton
     fun getMovieRepository(
         apiService: MovieXpressApiService
-    ) : MovieRepository = MovieRepositoryImpl(apiService = apiService)
+    ): MovieRepository = MovieRepositoryImpl(apiService = apiService)
 
 }

@@ -89,6 +89,7 @@ class HomeViewModel @Inject constructor(
                                     comingSoonMovies = result.data!!
                                 )
                                 getInTheaterMovies()
+                                getPopularTVs()
                             }
                             is Resource.Failure -> {
                                 handleFailure(result)
@@ -128,5 +129,54 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun getPopularTVs() {
+        if (state.popularTVs.isEmpty()) {
+            viewModelScope.launch {
+                movieRepository.getPopularTVs()
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                state = state.copy(
+                                    popularTVs = result.data!!
+                                )
+                                getTopSeries()
+                            }
+                            is Resource.Failure -> {
+                                handleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                state = state.copy(isLoading = result.isLoading)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+
+    private fun getTopSeries() {
+        if (state.topTwoFiftySeries.isEmpty()) {
+            viewModelScope.launch {
+                movieRepository.getTopTwoFiftySeries()
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                state = state.copy(
+                                    topTwoFiftySeries = result.data!!
+                                )
+                            }
+                            is Resource.Failure -> {
+                                handleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                state = state.copy(isLoading = result.isLoading)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
 
 }

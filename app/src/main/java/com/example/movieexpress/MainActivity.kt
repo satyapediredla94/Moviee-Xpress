@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,7 +20,6 @@ import com.example.movieexpress.screen.Navigation
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
 import com.example.movieexpress.ui.theme.MovieeXpressTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -43,12 +41,14 @@ fun Content() {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         topBar = {
-                 TopAppBar {
-                     Text(text = stringResource(id = R.string.app_name),
-                     fontWeight = FontWeight.Bold,
-                     style = MaterialTheme.typography.h6,
-                     modifier = Modifier.padding(start = 14.dp))
-                 }
+            TopAppBar {
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(start = 14.dp)
+                )
+            }
         },
         bottomBar = {
             BottomBar(navController)

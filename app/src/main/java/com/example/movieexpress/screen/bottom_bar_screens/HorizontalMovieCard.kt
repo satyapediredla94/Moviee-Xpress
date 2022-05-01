@@ -17,13 +17,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImage
-import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
+import com.example.movieexpress.model.response.toptwofiftymovies.Movie
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun HorizontalUpcomingMovieCard(
+fun HorizontalMovieCard(
     navController: NavController = rememberNavController(),
-    movie: UpcomingMovie
+    movie: Movie
 ) {
     Card(
         modifier = Modifier
@@ -37,7 +37,7 @@ fun HorizontalUpcomingMovieCard(
 
         ) {
             AsyncImage(
-                model = movie.image, contentDescription = "",
+                model = movie.image, contentDescription = movie.title,
                 modifier = Modifier.fillMaxHeight(),
                 contentScale = ContentScale.FillHeight
             )
@@ -53,7 +53,7 @@ fun HorizontalUpcomingMovieCard(
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = movie.directors,
+                    text = movie.crew,
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier.padding(start = 8.dp),
                     maxLines = 2,

@@ -33,10 +33,54 @@ class MovieRepositoryImpl(
 
     }
 
+override fun getTopTwoFiftySeries(): Flow<Resource<List<Movie>>> = flow {
+        emit(Resource.Loading(true))
+        try {
+            val movies = apiService.getTopSeries()
+            if (movies.errorMessage.isNotEmpty()) {
+                emit(Resource.Failure(message = movies.errorMessage))
+            } else {
+                movies.items?.let {
+                    emit(Resource.Success(movies.items))
+                }
+            }
+        } catch (e: IOException) {
+            emit(Resource.Failure(null, "Something went wrong at Server"))
+            emit(Resource.Loading(false))
+        } catch (e: Exception) {
+            emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
+            emit(Resource.Loading(false))
+        }
+
+    }
+
     override fun getPopularMovies(): Flow<Resource<List<Movie>>> = flow {
         emit(Resource.Loading(true))
         try {
             val movies = apiService.getPopularMovies()
+            if (movies.errorMessage.isNotEmpty()) {
+                emit(Resource.Failure(message = movies.errorMessage))
+            } else {
+                movies.items?.let {
+                    emit(Resource.Success(movies.items))
+                }
+            }
+            emit(Resource.Loading(false))
+        } catch (e: IOException) {
+            emit(Resource.Failure(null, "Something went wrong at Server"))
+            emit(Resource.Loading(false))
+        } catch (e: Exception) {
+            emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
+            emit(Resource.Loading(false))
+        }
+
+    }
+
+
+    override fun getPopularTVs(): Flow<Resource<List<Movie>>> = flow {
+        emit(Resource.Loading(true))
+        try {
+            val movies = apiService.getPopularTVs()
             if (movies.errorMessage.isNotEmpty()) {
                 emit(Resource.Failure(message = movies.errorMessage))
             } else {
