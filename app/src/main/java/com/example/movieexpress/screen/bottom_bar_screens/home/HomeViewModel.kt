@@ -178,5 +178,32 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getMovieOrSeries(searchString: String) {
+        if (state.searchResponse.isEmpty() || isSearchCriteriaMatched(searchString)) {
+            viewModelScope.launch {
+                movieRepository.getMovieOrSeriesInfo(searchString)
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                state = state.copy(
+                                    searchResponse = result.data!!
+                                )
+                            }
+                            is Resource.Failure -> {
+                                handleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                state = state.copy(isLoading = result.isLoading)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun isSearchCriteriaMatched(searchString: String): Boolean {
+        return state.searchResponse.isNotEmpty() && !state.searchResponse[0].title.contains(searchString)
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.movieexpress.remote
 
+import com.example.movieexpress.model.response.searchresponse.SearchResult
 import com.example.movieexpress.model.response.toptwofiftymovies.Movie
 import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
 import com.example.movieexpress.utils.Resource
@@ -133,6 +134,29 @@ override fun getTopTwoFiftySeries(): Flow<Resource<List<Movie>>> = flow {
                 movies.upcomingMovies?.let {
                     Timber.d("Upcoming movies from service: ${it.size}")
                     emit(Resource.Success(movies.upcomingMovies))
+                }
+            }
+            emit(Resource.Loading(false))
+        } catch (e: IOException) {
+            emit(Resource.Failure(null, "Something went wrong at Server"))
+            emit(Resource.Loading(false))
+        } catch (e: Exception) {
+            emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
+            emit(Resource.Loading(false))
+        }
+    }
+
+    override fun getMovieOrSeriesInfo(searchString: String): Flow<Resource<List<SearchResult>>> = flow {
+        emit(Resource.Loading(true))
+        try {
+            val movies = apiService.getMovieOrSeriesInfo(searchString)
+            Timber.d("Upcoming movies from service: ${movies.searchResults?.size}")
+            if (movies.errorMessage.isNotEmpty()) {
+                emit(Resource.Failure(message = movies.errorMessage))
+            } else {
+                movies.searchResults?.let {
+                    Timber.d("Upcoming movies from service: ${it.size}")
+                    emit(Resource.Success(movies.searchResults))
                 }
             }
             emit(Resource.Loading(false))

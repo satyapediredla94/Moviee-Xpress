@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.movieexpress.screen.bottom_bar_screens.movies.MoviesScreen
-import com.example.movieexpress.screen.bottom_bar_screens.search.SearchScreen
-import com.example.movieexpress.screen.bottom_bar_screens.series.SeriesScreen
-import com.example.movieexpress.screen.bottom_bar_screens.settings.SettingsScreen
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeScreen
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
+import com.example.movieexpress.screen.bottom_bar_screens.movies.MoviesScreen
+import com.example.movieexpress.screen.bottom_bar_screens.search.SearchHomeScreen
+import com.example.movieexpress.screen.bottom_bar_screens.series.SeriesScreen
+import com.example.movieexpress.screen.bottom_bar_screens.settings.SettingsScreen
 
 @Composable
 fun Navigation(
@@ -33,7 +33,10 @@ fun Navigation(
             )
         }
         composable(BottomMenuItem.Search.route) {
-            SearchScreen()
+            SearchHomeScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
         composable(BottomMenuItem.Settings.route) {
             SettingsScreen()
