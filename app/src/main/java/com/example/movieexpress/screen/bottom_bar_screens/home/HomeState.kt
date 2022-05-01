@@ -7,6 +7,7 @@ data class HomeState(
     val topTwoFiftyMovies: List<Movie> = emptyList(),
     val popularMovies: List<Movie> = emptyList(),
     val comingSoonMovies: List<UpcomingMovie> = emptyList(),
+    val inTheaterMovies: List<UpcomingMovie> = emptyList(),
     val isLoading : Boolean = false,
     val isError: String = ""
 )

@@ -7,8 +7,8 @@ import retrofit2.http.GET
 interface MovieXpressApiService {
 
     companion object {
-        const val API_KEY = "k_j07xlx3k"
-//        const val API_KEY = "k_rpepd5t5"
+//        const val API_KEY = "k_j07xlx3k"
+        const val API_KEY = "k_rpepd5t5"
         const val BASE_URL = "https://imdb-api.com/en/API/"
     }
 
@@ -20,5 +20,8 @@ interface MovieXpressApiService {
 
     @GET("ComingSoon/$API_KEY")
     suspend fun getUpcomingMovies(): UpcomingMoviesResponse
+
+    @GET("InTheaters/$API_KEY")
+    suspend fun getInTheaterMovies(): UpcomingMoviesResponse
 
 }

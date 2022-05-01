@@ -25,7 +25,10 @@ fun Navigation(navController: NavHostController,
             SeriesScreen()
         }
         composable(BottomMenuItem.Movies.route) {
-            MoviesScreen()
+            viewModel.getInTheaterMovies()
+            MoviesScreen(
+                state = viewModel.state
+            )
         }
         composable(BottomMenuItem.Search.route) {
             SearchScreen()

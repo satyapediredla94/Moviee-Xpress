@@ -9,6 +9,7 @@ import com.example.movieexpress.remote.MovieRepository
 import com.example.movieexpress.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,24 +24,26 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getTopMovies() {
-        viewModelScope.launch {
-            movieRepository.getTopTwoFiftyMovies()
-                .collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            state = state.copy(
-                                topTwoFiftyMovies = result.data!!
-                            )
-                            getPopularMovies()
-                        }
-                        is Resource.Failure -> {
-                            handleFailure(result)
-                        }
-                        is Resource.Loading -> {
-                            state = state.copy(isLoading = result.isLoading)
+        if (state.topTwoFiftyMovies.isEmpty()) {
+            viewModelScope.launch {
+                movieRepository.getTopTwoFiftyMovies()
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                state = state.copy(
+                                    topTwoFiftyMovies = result.data!!
+                                )
+                                getPopularMovies()
+                            }
+                            is Resource.Failure -> {
+                                handleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                state = state.copy(isLoading = result.isLoading)
+                            }
                         }
                     }
-                }
+            }
         }
     }
 
@@ -52,45 +55,77 @@ class HomeViewModel @Inject constructor(
 
 
     private fun getPopularMovies() {
-        viewModelScope.launch {
-            movieRepository.getPopularMovies()
-                .collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            state = state.copy(
-                                popularMovies = result.data!!
-                            )
-                            getComingSoonMovies()
-                        }
-                        is Resource.Failure -> {
-                            handleFailure(result)
-                        }
-                        is Resource.Loading -> {
-                            state = state.copy(isLoading = result.isLoading)
+        if (state.popularMovies.isEmpty()) {
+            viewModelScope.launch {
+                movieRepository.getPopularMovies()
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                state = state.copy(
+                                    popularMovies = result.data!!
+                                )
+                                getComingSoonMovies()
+                            }
+                            is Resource.Failure -> {
+                                handleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                state = state.copy(isLoading = result.isLoading)
+                            }
                         }
                     }
-                }
+            }
         }
     }
 
     private fun getComingSoonMovies() {
-        viewModelScope.launch {
-            movieRepository.getUpcomingMovies()
-                .collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            state = state.copy(
-                                comingSoonMovies = result.data!!
-                            )
-                        }
-                        is Resource.Failure -> {
-                            handleFailure(result)
-                        }
-                        is Resource.Loading -> {
-                            state = state.copy(isLoading = result.isLoading)
+        if (state.comingSoonMovies.isEmpty()) {
+            viewModelScope.launch {
+                movieRepository.getUpcomingMovies()
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                state = state.copy(
+                                    comingSoonMovies = result.data!!
+                                )
+                                getInTheaterMovies()
+                            }
+                            is Resource.Failure -> {
+                                handleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                state = state.copy(isLoading = result.isLoading)
+                            }
                         }
                     }
-                }
+            }
+        }
+    }
+
+    fun getInTheaterMovies() {
+        if (state.inTheaterMovies.isEmpty()) {
+            Timber.d("In Theater movies are empty. So making API call")
+            viewModelScope.launch {
+                movieRepository.getInTheaterMovies()
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                Timber.d("In Theater movies service returned Success")
+                                state = state.copy(
+                                    inTheaterMovies = result.data!!
+                                )
+                            }
+                            is Resource.Failure -> {
+                                Timber.d("In Theater movies service returned Failure")
+                                handleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                Timber.d("In Theater movies service returned Loading as ${result.isLoading}")
+                                state = state.copy(isLoading = result.isLoading)
+                            }
+                        }
+                    }
+            }
         }
     }
 

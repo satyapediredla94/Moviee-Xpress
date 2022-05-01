@@ -77,4 +77,27 @@ class MovieRepositoryImpl(
             send(Resource.Loading(false))
         }
     }
+
+    override fun getInTheaterMovies(): Flow<Resource<List<UpcomingMovie>>> = flow {
+        emit(Resource.Loading(true))
+        try {
+            val movies = apiService.getInTheaterMovies()
+            Timber.d("Upcoming movies from service: ${movies.upcomingMovies?.size}")
+            if (movies.errorMessage.isNotEmpty()) {
+                emit(Resource.Failure(message = movies.errorMessage))
+            } else {
+                movies.upcomingMovies?.let {
+                    Timber.d("Upcoming movies from service: ${it.size}")
+                    emit(Resource.Success(movies.upcomingMovies))
+                }
+            }
+            emit(Resource.Loading(false))
+        } catch (e: IOException) {
+            emit(Resource.Failure(null, "Something went wrong at Server"))
+            emit(Resource.Loading(false))
+        } catch (e: Exception) {
+            emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
+            emit(Resource.Loading(false))
+        }
+    }
 }

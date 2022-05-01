@@ -10,5 +10,6 @@ interface MovieRepository {
     fun getTopTwoFiftyMovies(): Flow<Resource<List<Movie>>>
     fun getPopularMovies(): Flow<Resource<List<Movie>>>
     fun getUpcomingMovies(): Flow<Resource<List<UpcomingMovie>>>
+    fun getInTheaterMovies(): Flow<Resource<List<UpcomingMovie>>>
 
 }
