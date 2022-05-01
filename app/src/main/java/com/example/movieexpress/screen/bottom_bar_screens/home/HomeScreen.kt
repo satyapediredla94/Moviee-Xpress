@@ -10,15 +10,12 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.movieexpress.R
-import com.example.movieexpress.model.response.toptwofiftymovies.Movie
-import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
-import com.example.movieexpress.screen.bottom_bar_screens.HorizontalCard
-import com.example.movieexpress.screen.bottom_bar_screens.VerticalCard
+import com.example.movieexpress.screen.bottom_bar_screens.HorizontalUpcomingMovieCard
+import com.example.movieexpress.screen.bottom_bar_screens.VerticalMovieCard
 
 @Composable
 fun HomeScreen(
@@ -39,7 +36,7 @@ fun HomeScreen(
         } else {
             LazyRow {
                 items(state.topTwoFiftyMovies) { movie ->
-                    VerticalCard(movie = movie)
+                    VerticalMovieCard(movie = movie)
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
@@ -55,7 +52,7 @@ fun HomeScreen(
         } else {
             LazyRow {
                 items(state.popularMovies) { movie ->
-                    VerticalCard(movie = movie)
+                    VerticalMovieCard(movie = movie)
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
@@ -72,7 +69,7 @@ fun HomeScreen(
                 Modifier.height((80 * 5).dp)
             ) {
                 items(state.comingSoonMovies) { movie ->
-                    HorizontalCard(movie = movie)
+                    HorizontalUpcomingMovieCard(movie = movie)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }

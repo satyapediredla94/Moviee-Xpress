@@ -22,7 +22,7 @@ import com.example.movieexpress.model.response.toptwofiftymovies.Movie
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun VerticalCard(
+fun VerticalMovieCard(
     navController: NavController = rememberNavController(),
     movie: Movie
 ) {
@@ -71,7 +71,7 @@ fun VerticalCard(
 @Preview
 @Composable
 fun PreviewCard() {
-    VerticalCard(
+    VerticalMovieCard(
         movie = Movie(
             crew = "Tom Cruise",
             fullTitle = "Mission Impossible 4",
