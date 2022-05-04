@@ -14,7 +14,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImage
 import com.example.movieexpress.model.response.toptwofiftymovies.Movie
@@ -35,9 +34,7 @@ fun HorizontalMovieCard(
             .height(80.dp)
             .fillMaxWidth()
     ) {
-        Row(
-
-        ) {
+        Row {
             AsyncImage(
                 model = movie.image, contentDescription = movie.title,
                 modifier = Modifier.fillMaxHeight(),

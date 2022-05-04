@@ -13,7 +13,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.movieexpress.screen.bottom_bar_screens.cards.CategoryCard
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
@@ -21,7 +20,6 @@ import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
 
 @Composable
 fun MovieDescription(
-    navController: NavController,
     movieId: String?,
     viewModel: HomeViewModel
 ) {
@@ -111,16 +109,16 @@ fun MovieDescription(
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
                         val genres = it
-                            if (genres.isNotEmpty()) {
-                                genres.forEach {
-                                    it.value?.let {
-                                        CategoryCard(
-                                            category = it,
-                                            modifier = Modifier.padding(8.dp)
-                                        )
-                                    }
+                        if (genres.isNotEmpty()) {
+                            genres.forEach {
+                                it.value?.let { genre ->
+                                    CategoryCard(
+                                        category = genre,
+                                        modifier = Modifier.padding(8.dp)
+                                    )
                                 }
                             }
+                        }
                     }
                 }
 

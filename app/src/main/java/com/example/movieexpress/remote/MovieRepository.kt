@@ -16,6 +16,6 @@ interface MovieRepository {
     fun getUpcomingMovies(): Flow<Resource<List<UpcomingMovie>>>
     fun getInTheaterMovies(): Flow<Resource<List<UpcomingMovie>>>
     fun getMovieOrSeriesInfo(searchString: String): Flow<Resource<List<SearchResult>>>
-    fun getMovieDetail(titleId: String) : Flow<Resource<MovieDetail>>
+    fun getMovieDetail(titleId: String): Flow<Resource<MovieDetail>>
 
 }

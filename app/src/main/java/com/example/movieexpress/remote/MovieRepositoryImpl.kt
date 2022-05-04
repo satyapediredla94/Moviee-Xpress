@@ -35,7 +35,7 @@ class MovieRepositoryImpl(
 
     }
 
-override fun getTopTwoFiftySeries(): Flow<Resource<List<Movie>>> = flow {
+    override fun getTopTwoFiftySeries(): Flow<Resource<List<Movie>>> = flow {
         emit(Resource.Loading(true))
         try {
             val movies = apiService.getTopSeries()
@@ -147,30 +147,31 @@ override fun getTopTwoFiftySeries(): Flow<Resource<List<Movie>>> = flow {
         }
     }
 
-    override fun getMovieOrSeriesInfo(searchString: String): Flow<Resource<List<SearchResult>>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            val movies = apiService.getMovieOrSeriesInfo(searchString)
-            Timber.d("Upcoming movies from service: ${movies.searchResults?.size}")
-            if (movies.errorMessage.isNotEmpty()) {
-                emit(Resource.Failure(message = movies.errorMessage))
-            } else {
-                movies.searchResults?.let {
-                    Timber.d("Upcoming movies from service: ${it.size}")
-                    emit(Resource.Success(movies.searchResults))
+    override fun getMovieOrSeriesInfo(searchString: String): Flow<Resource<List<SearchResult>>> =
+        flow {
+            emit(Resource.Loading(true))
+            try {
+                val movies = apiService.getMovieOrSeriesInfo(searchString)
+                Timber.d("Upcoming movies from service: ${movies.searchResults?.size}")
+                if (movies.errorMessage.isNotEmpty()) {
+                    emit(Resource.Failure(message = movies.errorMessage))
+                } else {
+                    movies.searchResults?.let {
+                        Timber.d("Upcoming movies from service: ${it.size}")
+                        emit(Resource.Success(movies.searchResults))
+                    }
                 }
+                emit(Resource.Loading(false))
+            } catch (e: IOException) {
+                emit(Resource.Failure(null, "Something went wrong at Server"))
+                emit(Resource.Loading(false))
+            } catch (e: Exception) {
+                emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
+                emit(Resource.Loading(false))
             }
-            emit(Resource.Loading(false))
-        } catch (e: IOException) {
-            emit(Resource.Failure(null, "Something went wrong at Server"))
-            emit(Resource.Loading(false))
-        } catch (e: Exception) {
-            emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
-            emit(Resource.Loading(false))
         }
-    }
 
-    override fun getMovieDetail(titleId: String) : Flow<Resource<MovieDetail>> = flow {
+    override fun getMovieDetail(titleId: String): Flow<Resource<MovieDetail>> = flow {
         try {
             val movieDetails = apiService.getMovieDetail(titleId = titleId)
             Timber.d("Movie Details : API Finished")

@@ -10,7 +10,7 @@ import retrofit2.http.Path
 interface MovieXpressApiService {
 
     companion object {
-//                const val API_KEY = "k_3xzdnxal"
+        //                const val API_KEY = "k_3xzdnxal"
         const val API_KEY = "k_fpkihu7b"
         const val BASE_URL = "https://imdb-api.com/en/API/"
     }

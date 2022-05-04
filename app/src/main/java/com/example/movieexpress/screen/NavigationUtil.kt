@@ -60,7 +60,7 @@ fun Navigation(
         ) { navBackStackEntry ->
             val movieId = navBackStackEntry.arguments?.get("titleId")
             MovieDescription(
-                navController = navController, movieId = movieId as String,
+                movieId = movieId as String,
                 viewModel = viewModel
             )
         }
