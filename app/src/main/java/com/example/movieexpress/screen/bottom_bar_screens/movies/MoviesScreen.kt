@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.movieexpress.R
 import com.example.movieexpress.screen.bottom_bar_screens.cards.HorizontalMovieCard
 import com.example.movieexpress.screen.bottom_bar_screens.cards.VerticalMovieCard
@@ -22,7 +23,8 @@ import com.example.movieexpress.screen.bottom_bar_screens.home.HomeState
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoviesScreen(
-    state: HomeState
+    state: HomeState,
+    navController: NavController
 ) {
     Column(
         modifier = Modifier
@@ -39,7 +41,10 @@ fun MoviesScreen(
         } else {
             LazyRow {
                 items(state.popularMovies) { movie ->
-                    VerticalMovieCard(movie = movie)
+                    VerticalMovieCard(
+                        movie = movie,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
@@ -57,7 +62,10 @@ fun MoviesScreen(
                 modifier = Modifier.height((80 * 5).dp)
             ) {
                 items(state.topTwoFiftyMovies) { movie ->
-                    HorizontalMovieCard(movie = movie)
+                    HorizontalMovieCard(
+                        movie = movie,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }

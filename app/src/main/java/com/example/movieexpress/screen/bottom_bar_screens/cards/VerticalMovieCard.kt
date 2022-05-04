@@ -19,17 +19,19 @@ import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImage
 import com.example.movieexpress.model.response.toptwofiftymovies.Movie
+import com.example.movieexpress.utils.AppConstants
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun VerticalMovieCard(
-    navController: NavController = rememberNavController(),
+    navController: NavController,
     movie: Movie
 ) {
     Card(
         modifier = Modifier
             .clip(RoundedCornerShape(15.dp))
             .clickable {
+                navController.navigate("${AppConstants.MOVIE_DESCRIPTION}/${movie.id}")
             }
             .width(125.dp)
     ) {
@@ -64,24 +66,4 @@ fun VerticalMovieCard(
             }
         }
     }
-
-}
-
-
-@Preview
-@Composable
-fun PreviewCard() {
-    VerticalMovieCard(
-        movie = Movie(
-            crew = "Tom Cruise",
-            fullTitle = "Mission Impossible 4",
-            id = "djaknk",
-            imDbRating = "7.8",
-            imDbRatingCount = "2839892",
-            image = "https://imdb-api.com/images/original/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_Ratio0.6716_AL_.jpg",
-            rank = "6",
-            title = "MI 4",
-            year = "2016"
-        )
-    )
 }

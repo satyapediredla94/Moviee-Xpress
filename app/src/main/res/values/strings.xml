@@ -6,4 +6,7 @@
     <string name="in_theater_movies">In Theater</string>
     <string name="popular_tvs">Popular TV Shows</string>
     <string name="top_two_fifty_tvs">Top 250 Shows</string>
+    <string name="synopsis">Synopsis:</string>
+    <string name="rating">Rating:</string>
+    <string name="director">Director:</string>
 </resources>

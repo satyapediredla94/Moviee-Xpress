@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.movieexpress.R
 import com.example.movieexpress.screen.bottom_bar_screens.cards.HorizontalMovieCard
 import com.example.movieexpress.screen.bottom_bar_screens.cards.VerticalMovieCard
@@ -20,7 +21,8 @@ import com.example.movieexpress.screen.bottom_bar_screens.home.HomeState
 
 @Composable
 fun SeriesScreen(
-    state: HomeState
+    state: HomeState,
+    navController: NavController
 ) {
     Column(
         modifier = Modifier
@@ -37,7 +39,10 @@ fun SeriesScreen(
         } else {
             LazyRow {
                 items(state.popularTVs) { movie ->
-                    VerticalMovieCard(movie = movie)
+                    VerticalMovieCard(
+                        movie = movie,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
@@ -55,7 +60,10 @@ fun SeriesScreen(
                 modifier = Modifier.height((80 * 6).dp)
             ) {
                 items(state.topTwoFiftySeries) { movie ->
-                    HorizontalMovieCard(movie = movie)
+                    HorizontalMovieCard(
+                        movie = movie,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }

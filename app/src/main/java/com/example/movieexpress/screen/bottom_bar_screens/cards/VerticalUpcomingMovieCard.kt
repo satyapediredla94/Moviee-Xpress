@@ -23,7 +23,7 @@ import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun VerticalUpcomingMovieCard(
-    navController: NavController = rememberNavController(),
+    navController: NavController,
     movie: UpcomingMovie
 ) {
     Card(

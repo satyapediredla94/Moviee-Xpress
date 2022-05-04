@@ -13,13 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.movieexpress.R
 import com.example.movieexpress.screen.bottom_bar_screens.cards.HorizontalUpcomingMovieCard
 import com.example.movieexpress.screen.bottom_bar_screens.cards.VerticalMovieCard
 
 @Composable
 fun HomeScreen(
-    state: HomeState
+    state: HomeState,
+    navController: NavController
 ) {
     Column(
         Modifier
@@ -36,7 +38,10 @@ fun HomeScreen(
         } else {
             LazyRow {
                 items(state.popularMovies) { movie ->
-                    VerticalMovieCard(movie = movie)
+                    VerticalMovieCard(
+                        movie = movie,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
@@ -52,7 +57,10 @@ fun HomeScreen(
         } else {
             LazyRow {
                 items(state.popularTVs) { movie ->
-                    VerticalMovieCard(movie = movie)
+                    VerticalMovieCard(
+                        movie = movie,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
@@ -70,7 +78,10 @@ fun HomeScreen(
                 Modifier.height((80 * 6).dp)
             ) {
                 items(state.comingSoonMovies) { movie ->
-                    HorizontalUpcomingMovieCard(movie = movie)
+                    HorizontalUpcomingMovieCard(
+                        movie = movie,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }

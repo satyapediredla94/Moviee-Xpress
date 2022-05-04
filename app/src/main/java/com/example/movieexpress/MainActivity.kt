@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -14,8 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.movieexpress.screen.BottomBar
+import com.example.movieexpress.screen.BottomMenuItem
 import com.example.movieexpress.screen.Navigation
 import com.example.movieexpress.screen.bottom_bar_screens.home.HomeViewModel
 import com.example.movieexpress.ui.theme.MovieeXpressTheme
@@ -39,21 +43,44 @@ fun Content() {
     val navController = rememberNavController()
     val viewModel: HomeViewModel = hiltViewModel()
     val scaffoldState = rememberScaffoldState()
+    val routes = listOf(
+        BottomMenuItem.Home.route,
+        BottomMenuItem.Search.route,
+        BottomMenuItem.Settings.route,
+        BottomMenuItem.Series.route,
+        BottomMenuItem.Movies.route
+    )
+    val showTopAndBottomBar =
+        navController.currentBackStackEntryAsState().value?.destination?.route in routes
     Scaffold(
         topBar = {
-            TopAppBar {
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(start = 14.dp)
-                )
-            }
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.h6,
+                        modifier = Modifier.padding(start = 14.dp)
+                    )
+                },
+                navigationIcon = {
+                    if (!showTopAndBottomBar) {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    }
+                }
+            )
         },
         bottomBar = {
-            BottomBar(navController)
+            if (showTopAndBottomBar) {
+                BottomBar(navController)
+            }
         },
-        content = { it ->
+        content = {
             Box(Modifier.padding(it)) {
                 viewModel.state.isError.let { error ->
                     if (error.isNotEmpty()) {
@@ -63,8 +90,12 @@ fun Content() {
                                 actionLabel = "OK"
                             )
                             when (result) {
-                                SnackbarResult.Dismissed -> {}
-                                SnackbarResult.ActionPerformed -> {}
+                                SnackbarResult.Dismissed -> {
+                                    viewModel.clearErrorMessage()
+                                }
+                                SnackbarResult.ActionPerformed -> {
+                                    viewModel.clearErrorMessage()
+                                }
                             }
                         }
                     }

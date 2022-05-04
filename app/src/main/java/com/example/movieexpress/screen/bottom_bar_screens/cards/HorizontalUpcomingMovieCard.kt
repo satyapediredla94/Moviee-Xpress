@@ -18,17 +18,19 @@ import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImage
 import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
+import com.example.movieexpress.utils.AppConstants
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun HorizontalUpcomingMovieCard(
-    navController: NavController = rememberNavController(),
+    navController: NavController,
     movie: UpcomingMovie
 ) {
     Card(
         modifier = Modifier
             .clip(RoundedCornerShape(15.dp))
             .clickable {
+                navController.navigate("${AppConstants.MOVIE_DESCRIPTION}/${movie.id}")
             }
             .height(80.dp)
             .fillMaxWidth()

@@ -5,9 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieexpress.remote.MovieRepository
 import com.example.movieexpress.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -48,6 +50,12 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun <T> handleFailure(result: Resource.Failure<List<T>>) {
+        state = state.copy(
+            isError = result.message!!
+        )
+    }
+
+    private fun <T> handleSingleFailure(result: Resource.Failure<T>) {
         state = state.copy(
             isError = result.message!!
         )
@@ -201,8 +209,37 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getMovieDetails(titleId: String) {
+        if (state.movieDetail == null || state.movieDetail?.id != titleId) {
+            viewModelScope.launch {
+                movieRepository.getMovieDetail(titleId = titleId)
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                state = state.copy(
+                                    movieDetail = result.data!!
+                                )
+                            }
+                            is Resource.Failure -> {
+                                handleSingleFailure(result)
+                            }
+                            is Resource.Loading -> {
+                                state = state.copy(isLoading = result.isLoading)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
     private fun isSearchCriteriaMatched(searchString: String): Boolean {
         return state.searchResponse.isNotEmpty() && !state.searchResponse[0].title.contains(searchString)
+    }
+
+    fun clearErrorMessage() {
+        state = state.copy(
+            isError = ""
+        )
     }
 
 

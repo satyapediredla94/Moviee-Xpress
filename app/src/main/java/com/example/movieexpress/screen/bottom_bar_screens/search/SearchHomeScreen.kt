@@ -34,7 +34,10 @@ fun SearchHomeScreen(
         } else {
             LazyColumn {
                 items(state.searchResponse) { searchResponse ->
-                    HorizontalSearchCard(movie = searchResponse)
+                    HorizontalSearchCard(
+                        movie = searchResponse,
+                        navController = navController
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }

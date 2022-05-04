@@ -1,5 +1,6 @@
 package com.example.movieexpress.remote
 
+import com.example.movieexpress.model.response.moviedetail.MovieDetail
 import com.example.movieexpress.model.response.searchresponse.SearchResult
 import com.example.movieexpress.model.response.toptwofiftymovies.Movie
 import com.example.movieexpress.model.response.upcomingmovies.UpcomingMovie
@@ -160,6 +161,25 @@ override fun getTopTwoFiftySeries(): Flow<Resource<List<Movie>>> = flow {
                 }
             }
             emit(Resource.Loading(false))
+        } catch (e: IOException) {
+            emit(Resource.Failure(null, "Something went wrong at Server"))
+            emit(Resource.Loading(false))
+        } catch (e: Exception) {
+            emit(Resource.Failure(null, "Something went wrong. Please try again momentarily"))
+            emit(Resource.Loading(false))
+        }
+    }
+
+    override fun getMovieDetail(titleId: String) : Flow<Resource<MovieDetail>> = flow {
+        try {
+            val movieDetails = apiService.getMovieDetail(titleId = titleId)
+            Timber.d("Movie Details : API Finished")
+            if (!movieDetails.errorMessage.isNullOrEmpty()) {
+                emit(Resource.Failure(message = movieDetails.errorMessage))
+            } else {
+                Timber.d("Movie Details: Error message is null or empty")
+                emit(Resource.Success(data = movieDetails))
+            }
         } catch (e: IOException) {
             emit(Resource.Failure(null, "Something went wrong at Server"))
             emit(Resource.Loading(false))
