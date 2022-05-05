@@ -7,6 +7,8 @@
     <string name="popular_tvs">Popular TV Shows</string>
     <string name="top_two_fifty_tvs">Top 250 Shows</string>
     <string name="synopsis">Synopsis:</string>
-    <string name="rating">Rating:</string>
-    <string name="director">Director:</string>
+    <string name="rating">Rating: </string>
+    <string name="director">Director: </string>
+    <string name="creator">Creator: </string>
+    <string name="cast">Star Cast: </string>
 </resources>

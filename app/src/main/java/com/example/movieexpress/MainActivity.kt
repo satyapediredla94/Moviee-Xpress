@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -54,26 +55,24 @@ fun Content() {
         navController.currentBackStackEntryAsState().value?.destination?.route in routes
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.h6,
-                        modifier = Modifier.padding(start = 14.dp)
-                    )
-                },
-                navigationIcon = {
-                    if (!showTopAndBottomBar) {
-                        IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "Back"
-                            )
-                        }
+            Row {
+                if (!showTopAndBottomBar) {
+                    IconButton(
+                        onClick = { navController.navigateUp() },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
                     }
                 }
-            )
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(start = 10.dp, top = 12.dp)
+                )
+            }
         },
         bottomBar = {
             if (showTopAndBottomBar) {

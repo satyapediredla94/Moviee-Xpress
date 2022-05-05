@@ -64,19 +64,39 @@ fun MovieDescription(
                     modifier = Modifier.padding(4.dp)
                 )
                 movie.directors?.let {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        Modifier.padding(4.dp)
-                    ) {
-                        Text(
-                            text = LocalContext.current.resources.getString(com.example.movieexpress.R.string.director),
-                            style = MaterialTheme.typography.body1,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.body1
-                        )
+                    if (it.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            Modifier.padding(4.dp)
+                        ) {
+                            Text(
+                                text = LocalContext.current.resources.getString(com.example.movieexpress.R.string.director),
+                                style = MaterialTheme.typography.body1,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = " $it",
+                                style = MaterialTheme.typography.body1
+                            )
+                        }
+                    }
+                }
+                movie.tvSeriesInfo?.creators?.let {
+                    if (it.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            Modifier.padding(4.dp)
+                        ) {
+                            Text(
+                                text = LocalContext.current.resources.getString(com.example.movieexpress.R.string.creator),
+                                style = MaterialTheme.typography.body1,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = " $it",
+                                style = MaterialTheme.typography.body1
+                            )
+                        }
                     }
                 }
                 movie.imDbRating?.let {
@@ -90,9 +110,8 @@ fun MovieDescription(
                             style = MaterialTheme.typography.body1,
                             fontWeight = FontWeight.Bold
                         )
-
                         Text(
-                            text = it,
+                            text = " $it",
                             style = MaterialTheme.typography.body1
                         )
                         Text(
@@ -121,7 +140,6 @@ fun MovieDescription(
                         }
                     }
                 }
-
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = LocalContext.current.resources.getString(com.example.movieexpress.R.string.synopsis),
@@ -135,6 +153,22 @@ fun MovieDescription(
                         style = MaterialTheme.typography.body1,
                         modifier = Modifier.padding(4.dp)
                     )
+                }
+                movie.stars?.let {
+                    if (it.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = LocalContext.current.resources.getString(com.example.movieexpress.R.string.cast),
+                            style = MaterialTheme.typography.body1,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                        Text(
+                            text = " $it",
+                            style = MaterialTheme.typography.body1,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
                 }
             }
         }
